@@ -1,0 +1,49 @@
+CCFLAGS = -g ;
+HDRS = 	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\activex\\word"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\activex\\excel"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\custctrl"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\custctrl\\custsupp"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\cvirtsup"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\datasock"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\daqUtil"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\printing"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\toolbox"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\reportgen"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\toolslib\\localui"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\instr"
+	"C:\\Program Files (x86)\\National Instruments\\Shared\\CVI\\toolslib\\custctrl"
+	"C:\\Program Files (x86)\\National Instruments\\Shared\\CVI\\toolslib\\custctrl\\custsupp"
+	"C:\\Program Files (x86)\\National Instruments\\Shared\\CVI\\instr"
+	"C:\\ProgramData\\National Instruments\\CVI2020\\instr"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\include"
+	"C:\\Program Files (x86)\\National Instruments\\Shared\\CVI\\include"
+	"C:\\ProgramData\\National Instruments\\CVI2020\\include"
+	"C:\\ProgramData\\National Instruments\\CVI\\include"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\include\\ansi"
+	"c:\\program files (x86)\\national instruments\\cvi2020\\include\\clang\\3.3"
+	"C:\\Program Files (x86)\\IVI Foundation\\IVI\\Include"
+	"C:\\Program Files (x86)\\IVI Foundation\\VISA\\winnt\\include"
+	"C:\\Program Files (x86)\\National Instruments\\Shared\\MSDTRedistributables\\SDKHeaderFiles\\8.1"
+	"c:\\Program Files (x86)\\National Instruments\\CVI2020\\bin"
+	"c:\\Program Files (x86)\\National Instruments\\Shared\\CVI\\Bin"
+	;
+include Jamfile_instr ;
+LOCATE on "frequencypanel.c" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer" ;
+LOCATE on "ui.c" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer" ;
+LOCATE on "ui.h" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer" ;
+Object "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\frequencypanel.c" ;
+FILENUM on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj" = 1 ;
+DEFPROTS on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj.cvidefprots" ;
+OUTFILE on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj.out" ;
+PrjObjects += "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\frequencypanel.obj" ;
+Object "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\ui.c" ;
+FILENUM on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj" = 2 ;
+DEFPROTS on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj.cvidefprots" ;
+OUTFILE on "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj" = "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj.out" ;
+PrjObjects += "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\ui.obj" ;
+Object "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\resources.res" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\resources.in.rc" ;
+Depends "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\resources.res" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\manifest.xml" ;
+MainFromObjects "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\proiect.exe" : $(PrjObjects) $(InstrObjects) ;
+Depends "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\proiect.exe" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\link_options.txt" ;
+Depends "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\proiect.exe" : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\resources.res" ;
+Depends all : "g:\\university\\3\\1\\APD\\P\\Signal-Analizer\\cvibuild.proiect\\Debug\\proiect.exe" ;

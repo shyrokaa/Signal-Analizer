@@ -1,0 +1,10 @@
+frequencypanel.obj
+ui.obj
+cvi.lib
+advanlys.lib
+cvistart.lib
+kernel32.lib
+user32.lib
+EXE Symbol Module
+Exports Module
+Resource Module

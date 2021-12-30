@@ -1,0 +1,1 @@
+-force-include-file "frequencypanel.c";"g:\university\3\1\APD\P\Signal-Analizer\frequencypanel.c" -force-include-file "ui.c";"g:\university\3\1\APD\P\Signal-Analizer\ui.c" -force-include-file "ui.h";"g:\university\3\1\APD\P\Signal-Analizer\ui.h" 

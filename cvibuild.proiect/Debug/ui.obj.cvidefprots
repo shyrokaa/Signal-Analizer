@@ -1,0 +1,65 @@
+[main]
+Class="Function"
+Prototype="int main(int argc, char *argv[]);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:71:5"
+
+[OnMainPanel]
+Class="Function"
+Prototype="int OnMainPanel(int panel, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:93:17"
+
+[Onfileloader]
+Class="Function"
+Prototype="int Onfileloader(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:111:17"
+
+[OnEnv]
+Class="Function"
+Prototype="int OnEnv(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:193:17"
+
+[OnRing]
+Class="Function"
+Prototype="int OnRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:216:17"
+
+[OnApplyBtt]
+Class="Function"
+Prototype="int OnApplyBtt(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:231:17"
+
+[OnAlpha]
+Class="Function"
+Prototype="int OnAlpha(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:282:17"
+
+[SwitchTime]
+Class="Function"
+Prototype="int SwitchTime(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:296:17"
+
+[OnSwitchPanelCB]
+Class="Function"
+Prototype="int OnSwitchPanelCB(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:535:17"
+
+[OnExpBtt]
+Class="Function"
+Prototype="int OnExpBtt(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:559:17"
+
+[OnGenerateBtt]
+Class="Function"
+Prototype="int OnGenerateBtt(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:607:17"
+
+[OnTimer]
+Class="Function"
+Prototype="int OnTimer(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:724:17"
+
+[OnWType]
+Class="Function"
+Prototype="int OnWType(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:820:17"
+
