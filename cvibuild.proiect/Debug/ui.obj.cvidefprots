@@ -56,10 +56,10 @@ SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:607:17"
 [OnTimer]
 Class="Function"
 Prototype="int OnTimer(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:724:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:728:17"
 
 [OnWType]
 Class="Function"
 Prototype="int OnWType(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:820:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:824:17"
 

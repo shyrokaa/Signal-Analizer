@@ -653,7 +653,11 @@ int CVICALLBACK OnGenerateBtt (int panel, int control, int event,
 					double autoSpectrum[numRead/2]; //spectrul de putere cu un numar de valori egal cu jumatate din dimensiunea bufferuluide intrare
 
 					WindowConst winConst;
-					ScaledWindowEx (splitRowSignal,numRead, window, 0, &winConst);		
+					if(window == 34)
+						ScaledWindowEx (splitRowSignal,numRead, WELCH, 0, &winConst);
+					else
+						ScaledWindowEx (splitRowSignal,numRead, BLKHARRIS, 0, &winConst);
+					
 					AutoPowerSpectrum(splitRowSignal,numRead,1/ sampleRate ,autoSpectrum,&df);	
 					PowerFrequencyEstimate (autoSpectrum, numRead / 2 , -1.0, winConst, df, 7, &freqPeak,&powerPeak); 
 					SpectrumUnitConversion (autoSpectrum, numRead/2, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df, winConst, convertedSpectrum, unit);	
