@@ -31,35 +31,35 @@ SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:231:17"
 [OnAlpha]
 Class="Function"
 Prototype="int OnAlpha(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:282:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:281:17"
 
 [SwitchTime]
 Class="Function"
 Prototype="int SwitchTime(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:296:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:295:17"
 
 [OnSwitchPanelCB]
 Class="Function"
 Prototype="int OnSwitchPanelCB(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:535:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:534:17"
 
 [OnExpBtt]
 Class="Function"
 Prototype="int OnExpBtt(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:559:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:558:17"
 
 [OnGenerateBtt]
 Class="Function"
 Prototype="int OnGenerateBtt(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:607:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:606:17"
 
 [OnTimer]
 Class="Function"
 Prototype="int OnTimer(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:728:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:750:17"
 
 [OnWType]
 Class="Function"
 Prototype="int OnWType(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);"
-SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:824:17"
+SourceLocation="g:\university\3\1\APD\P\Signal-Analizer\ui.c:865:17"
 

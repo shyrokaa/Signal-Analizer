@@ -267,7 +267,6 @@ int CVICALLBACK OnApplyBtt (int panel, int control, int event,
 				filtered_rowSignal[i] = (1-alpha) * filtered_rowSignal[i-1] + alpha * rowSignal[i];
 				}
 				
-				
 				DeleteGraphPlot(panel,WavePanel_IDC_GRAPH_DISPLAY2,-1,VAL_IMMEDIATE_DRAW);
 				PlotY(panel,WavePanel_IDC_GRAPH_DISPLAY2,filtered_rowSignal,npoints,VAL_DOUBLE, VAL_THIN_LINE, VAL_ASTERISK, VAL_SOLID, 1, VAL_RED);
 				
@@ -313,7 +312,7 @@ int CVICALLBACK SwitchTime (int panel, int control, int event,
 						rowSignal_split[i - index] = rowSignal[i];
 						filtered_rowSignal_split[i - index] = filtered_rowSignal[i];
 					}
-				
+					
 					for(int i = 0 ; i < select_multiplyer - 1; i++)
 						if((rowSignal_split[i] > 0 && rowSignal_split[i+1] < 0) || (rowSignal_split[i] < 0 && rowSignal_split[i+1] > 0))
 							z_cross++;	
@@ -620,16 +619,18 @@ int CVICALLBACK OnGenerateBtt (int panel, int control, int event,
 				//mod de lucru fara timer
 				case 0:
 				{	
+					int size;
 					SetCtrlAttribute( freqPanel, FreqPanel_TIMER, ATTR_ENABLED, 0 );
-					GetCtrlVal(freqPanel,FreqPanel_NSIZE,&numRead);
-					double splitRowSignal[numRead];
+					SetCtrlVal(freqPanel,FreqPanel_SAMPLER,sampleRate);
+					GetCtrlVal(freqPanel,FreqPanel_NSIZE,&size);
+					double splitRowSignal[size];
 					
 					//init cu esantionul necesar
-					if(splitindex + 2 * numRead < npoints)
+					if(splitindex + 2 * size < npoints)
 					{
-						splitindex += numRead;
+						splitindex += size;
 						timer++;
-						for(int i =  splitindex; i < splitindex + numRead ; i++)
+						for(int i =  splitindex; i < splitindex + size ; i++)
 						{
 							splitRowSignal[i - splitindex] = rowSignal[i];
 						}
@@ -638,29 +639,32 @@ int CVICALLBACK OnGenerateBtt (int panel, int control, int event,
 					{
 						splitindex = 0;
 						timer = 0;
-						for(int i =  splitindex; i <  splitindex + numRead ; i++)
+						for(int i =  splitindex; i <  splitindex + size ; i++)
 						{
 							splitRowSignal[i - splitindex] = rowSignal[i];
 						}
 					}
 						
-					double convertedSpectrum[numRead/2]; //frecventa estimata pentru spectrul de putere (maxim) din vectorul autoSpectrum	
-					double filteredSpectrum[numRead/2];
+					
+					WindowConst winConst;
 					double powerPeak = 0.0; //valoarea maxima din spectru de putere (din autoSpectrum)
 					double freqPeak = 0.0; //variabila ce reprezinta pasul in domeniul frecventei
-					double df = 0.0;
-					char unit[32] = "V"; //voltage signal - descriere a semnalului achizitionat
-					double autoSpectrum[numRead/2]; //spectrul de putere cu un numar de valori egal cu jumatate din dimensiunea bufferuluide intrare
-
-					WindowConst winConst;
-					if(window == 34)
-						ScaledWindowEx (splitRowSignal,numRead, WELCH, 0, &winConst);
-					else
-						ScaledWindowEx (splitRowSignal,numRead, BLKHARRIS, 0, &winConst);
+					double df;
+					char unit[32] = "V";
+					double autoSpectrum[size/2]; //spectrul de putere cu un numar de valori egal cu jumatate din dimensiunea bufferuluide intrare
+					double autoSpectrumRow[size/2];
+					double filteredRow[size/2];
+					double convertedSpectrum[size/2];
 					
-					AutoPowerSpectrum(splitRowSignal,numRead,1/ sampleRate ,autoSpectrum,&df);	
-					PowerFrequencyEstimate (autoSpectrum, numRead / 2 , -1.0, winConst, df, 7, &freqPeak,&powerPeak); 
-					SpectrumUnitConversion (autoSpectrum, numRead/2, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df, winConst, convertedSpectrum, unit);	
+					
+					if(window == 34)
+						ScaledWindow (splitRowSignal,size, WELCH, &winConst);
+					else
+						ScaledWindow (splitRowSignal,size, BLKHARRIS, &winConst);
+					
+					AutoPowerSpectrum(splitRowSignal,size,1/ sampleRate ,autoSpectrum,&df);	
+					PowerFrequencyEstimate (autoSpectrum, size / 2 , -1.0, winConst, df, 7, &freqPeak,&powerPeak); 
+					SpectrumUnitConversion (autoSpectrum, size/2, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df, winConst, convertedSpectrum, unit);	
 						
 					SetCtrlVal( freqPanel, FreqPanel_FP, freqPeak);
 					SetCtrlVal( freqPanel, FreqPanel_PP, powerPeak);
@@ -669,7 +673,7 @@ int CVICALLBACK OnGenerateBtt (int panel, int control, int event,
 					SetCtrlVal( freqPanel, FreqPanel_NP, npoints);
 				    
 					DeleteGraphPlot (freqPanel, FreqPanel_GRAPH, -1, VAL_IMMEDIATE_DRAW);	
-				    PlotWaveform( freqPanel, FreqPanel_GRAPH, convertedSpectrum, numRead/2 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
+				    PlotWaveform( freqPanel, FreqPanel_GRAPH, convertedSpectrum, size/2 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
 									
 					//FILTERS
 					
@@ -680,32 +684,50 @@ int CVICALLBACK OnGenerateBtt (int panel, int control, int event,
 					if(spectrumfilterEnable != 0)
 					{
 						
-						int ff,rf,rip;
-						GetCtrlVal(freqPanel,FreqPanel_FFQ,&ff);
+						double ff,rf,rip;
+						//SetCtrlVal(freqPanel,FreqPanel_FFQ,sampleRate);
+						ff = sampleRate;
 						GetCtrlVal(freqPanel,FreqPanel_RFQ,&rf);
 						GetCtrlVal(freqPanel,FreqPanel_RPL,&rip);
+						
+						
+						double df2;
+						
 						
 						
 						switch(spectrumFilterType)
 						{	
 							case 0:
 								//bw - 6th order
-								Copy1D (convertedSpectrum, (numRead/2) / 3, filteredSpectrum);
-								Bw_LPF(convertedSpectrum,(numRead/2) / 3,ff,rf,6,filteredSpectrum);
+								Bw_LPF(splitRowSignal,size/3,ff,rf,6,filteredRow);
+								
+								
+								AutoPowerSpectrum(filteredRow,size/3,1/sampleRate ,autoSpectrumRow,&df2);	
+								SpectrumUnitConversion (autoSpectrumRow, size/6, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df2, winConst, convertedSpectrum, unit);
+								
+	
 								DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
-								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, filteredSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_GREEN);
+								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, convertedSpectrum, size/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df2,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
+
 								break;
 						
 						
 							case 1:
 								//ch - 4th order
-								Copy1D (convertedSpectrum, (numRead/2) / 3, filteredSpectrum);
-								Ch_LPF(convertedSpectrum,(numRead / 2) / 3,ff,rf,rip,4,filteredSpectrum);
+								Ch_LPF(splitRowSignal,size / 3,ff,rf,rip,4,filteredRow);
+								
+								AutoPowerSpectrum(filteredRow,size/3,1/sampleRate ,autoSpectrumRow,&df2);	
+								SpectrumUnitConversion (autoSpectrumRow, size/6, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df2, winConst, convertedSpectrum, unit);
+								
+	
 								DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
-								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, filteredSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_GREEN);
+								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, convertedSpectrum, size/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df2,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
+
 																
 								break;
 						}
+						
+
 					}
 										
 					break;
@@ -756,9 +778,9 @@ int CVICALLBACK OnTimer (int panel, int control, int event,
 					splitRowSignal[i - splitindex] = rowSignal[i];
 				}
 			}
-				
+			double autoSpectrumRow[numRead/2];
+			double filteredRow[numRead/2];	
 			double convertedSpectrum[numRead/2]; //frecventa estimata pentru spectrul de putere (maxim) din vectorul autoSpectrum	
-			double filteredSpectrum[numRead/2];
 			double powerPeak = 0.0; //valoarea maxima din spectru de putere (din autoSpectrum)
 			double freqPeak = 0.0; //variabila ce reprezinta pasul in domeniul frecventei
 			double df = 0.0;
@@ -786,35 +808,54 @@ int CVICALLBACK OnTimer (int panel, int control, int event,
 			GetCtrlVal(freqPanel,FreqPanel_RING,&spectrumFilterType);
 			
 			if(spectrumfilterEnable != 0)
-			{
-				
-				int ff,rf,rip;
-				GetCtrlVal(freqPanel,FreqPanel_FFQ,&ff);
-				GetCtrlVal(freqPanel,FreqPanel_RFQ,&rf);
-				GetCtrlVal(freqPanel,FreqPanel_RPL,&rip);
-				
-				
-				switch(spectrumFilterType)
-				{	
-					case 0:
-						//bw - 6th order
-						Copy1D (convertedSpectrum, (numRead/2) / 3, filteredSpectrum);
-						Bw_LPF(convertedSpectrum,(numRead/2) / 3,ff,rf,6,filteredSpectrum);
-						DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
-						PlotWaveform( freqPanel, FreqPanel_GRAPH_2, filteredSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_GREEN);
-						break;
-				
-				
-					case 1:
-						//ch - 4th order
-						Copy1D (convertedSpectrum, (numRead/2) / 3, filteredSpectrum);
-						Ch_LPF(convertedSpectrum,(numRead / 2) / 3,ff,rf,rip,4,filteredSpectrum);
-						DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
-						PlotWaveform( freqPanel, FreqPanel_GRAPH_2, filteredSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_GREEN);
-														
-						break;
-				}
-			}
+					{
+						
+						double ff,rf,rip;
+						//SetCtrlVal(freqPanel,FreqPanel_FFQ,sampleRate);
+						ff = sampleRate;
+						GetCtrlVal(freqPanel,FreqPanel_RFQ,&rf);
+						GetCtrlVal(freqPanel,FreqPanel_RPL,&rip);
+						
+						
+						double df2;
+						char unit[32] = "V";
+						
+						double convertedSpectrum[numRead/2];
+						
+						switch(spectrumFilterType)
+						{	
+							case 0:
+								//bw - 6th order
+								Bw_LPF(splitRowSignal,numRead/3,ff,rf,6,filteredRow);
+								
+								
+								AutoPowerSpectrum(filteredRow,numRead/3,1/sampleRate ,autoSpectrumRow,&df2);	
+								SpectrumUnitConversion (autoSpectrumRow, numRead/6, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df2, winConst, convertedSpectrum, unit);
+								
+	
+								DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
+								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, convertedSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df2,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
+
+								break;
+						
+						
+							case 1:
+								//ch - 4th order
+								Ch_LPF(splitRowSignal,numRead / 3,ff,rf,rip,4,filteredRow);
+								
+								AutoPowerSpectrum(filteredRow,numRead/3,1/sampleRate ,autoSpectrumRow,&df2);	
+								SpectrumUnitConversion (autoSpectrumRow, numRead/6, SPECTRUM_POWER, SCALING_MODE_LINEAR, DISPLAY_UNIT_VRMS, df2, winConst, convertedSpectrum, unit);
+								
+	
+								DeleteGraphPlot (freqPanel, FreqPanel_GRAPH_2, -1, VAL_IMMEDIATE_DRAW);	
+								PlotWaveform( freqPanel, FreqPanel_GRAPH_2, convertedSpectrum, numRead/6 ,VAL_DOUBLE, 1.0, 0.0, 0.0, df2,VAL_THIN_LINE, VAL_EMPTY_SQUARE, VAL_SOLID,  VAL_CONNECTED_POINTS, VAL_RED);
+
+																
+								break;
+						}
+						
+
+					}
 			break;
 	}
 	return 0;

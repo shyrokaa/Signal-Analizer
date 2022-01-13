@@ -22,15 +22,15 @@
 #define  FreqPanel_COMMANDBUTTON_3        7       /* control type: command, callback function: OnExpBtt */
 #define  FreqPanel_COMMANDBUTTON          8       /* control type: command, callback function: OnGenerateBtt */
 #define  FreqPanel_TIMER                  9       /* control type: timer, callback function: OnTimer */
-#define  FreqPanel_NP                     10      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_IS                     11      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_CT                     12      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_PP                     13      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_FP                     14      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_FE                     15      /* control type: textButton, callback function: (none) */
-#define  FreqPanel_RFQ                    16      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_RPL                    17      /* control type: numeric, callback function: (none) */
-#define  FreqPanel_FFQ                    18      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_SAMPLER                10      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_NP                     11      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_IS                     12      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_CT                     13      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_PP                     14      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_FP                     15      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_FE                     16      /* control type: textButton, callback function: (none) */
+#define  FreqPanel_RFQ                    17      /* control type: numeric, callback function: (none) */
+#define  FreqPanel_RPL                    18      /* control type: numeric, callback function: (none) */
 #define  FreqPanel_RING                   19      /* control type: slide, callback function: OnWType */
 #define  FreqPanel_WINDOWTYPE             20      /* control type: slide, callback function: OnWType */
 
